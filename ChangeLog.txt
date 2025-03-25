@@ -1,0 +1,375 @@
+MALT4_TCP_V1.1 20240203
+=======================
+Rebuilt with a new AppName to synch with MALT_APIv1.docx
+
+Minor update: changed date format on status line of web pages to dd/mm/yyyy
+	ajaxCallbackFunctions.cpp (line368)
+		void getHTMLStatus(int sock, PCSTR url) {
+			char status[30];
+			siprintf(status, " %02d/%02d/%d  %02d:%02d:%02d", //lz waS " %d/%02d/%d 
+					dateTime.tm_mday,
+					...
+			
+Changes to html files (mostly*) consistent with MALT_V3.9C_HMP_V4PCB as given below
+* excluding 'opview' and specialist changes to labels (e.g Leak rate units, sava graph data option). 
+
+----(copy from MALT_V3.9C_HMP_V4PCB ChangeLog))---------------------------------
+microLeakTest.css
+	th, td {padding: 5px; } //was 5px; 5px; , which is syntactically incorrect
+  
+  Replaced border-width with border. i.e.
+	table.common {
+		border-width: 0px none;
+	}
+	Also in table.variants, table.option, table.fixture, table.
+		
+	table.option {
+		/*	width: 47%;*/ commented out this constraint.
+		Prevents wrapping of long label, i.e. "Ref -ve alarm pressure (Pa or mbar)", which
+		then made other elements overflow page. Note, this behaviour only happened after 
+		introducing	<!DOCTYPE html> header (see below). 
+
+All javascript (js) files with a req.open("GET", url, async); call
+	Modified the calls to req.open("GET", url, async); to ensure that 'async' parameter was set to true.
+	This is because sychronous update is now deprecated (see https://xhr.spec.whatwg.org/#the-open()-method)
+
+Placed <!DOCTYPE html> is at the head of all (user) html pages to ensure browsers use full standards mode.
+Previously, the pages were flagged as 'Quirks mode'.
+(cf. https://developer.mozilla.org/en-US/docs/Web/HTML/Quirks_Mode_and_Standards_Mode )
+	
+Created an html/images file with a Favicon image called Malt.ico
+	This icon is displayed on the tab of each web page, by including the follwing line in the header.
+	<link rel="icon" type="image/x-icon" href="images/Malt.ico">
+	or <link rel="icon" type="image/x-icon" href="../images/Malt.ico"> 
+	depending on where the page is located.  
+
+Removed all tilde(~) files from the html folder. 
+(These are redundant; created by the Bluefish editor LZ used).
+-------End of copied section---------------------------------------------------
+
+MALT4_TCP_V1.0 20210305
+=======================
+tcp/cmdprocessor.cpp (lines 244-247)
+Response string is just a number "%d". Previously included query ,e.g. "?T:%d".
+				case 'T': sprintf(response, "%d", appliedConfig ); break;//selected test
+				case 'I': sprintf(response, "%d", (FAULTBIT | DONEBIT | FAILBIT | PASSBIT)); break;
+				case 'S': sprintf(response, "%d", stepCount ); break; //stage of test
+				case 'R': sprintf(response, "%d", LT_Results.status ); break; //result code
+
+MALT4_TCP_V1.0 20210101
+=======================
+tcp_server.cpp 
+	Changed IPADDR to IPADDR4 (line 29).
+	Note IPADDR is IPADDR6 by default and gave a result 0.0.0.0 when ia is IPADDR4
+		/* Convert IP address to a string */
+		void IPtoString(IPADDR4  ia, char *s
+
+MALT4_TCP_V1.0 20210101
+=======================
+Fixed runtime error (trap) after graph data saved to disk.
+
+Problem tracked down to graphData.cpp. 
+Size of buffer (buf) in line 145 is too small, i.e. gtop*20, where 20 represents
+the number of characters for a csv record for graph data: time(ms),testp(dPa),diffp(dPa). 
+
+However, the record size (20) is without the 'step' value.
+
+Solution:
+graph/graphData.h
+	Insert at line 15
+	#define RVSIZE 25   //number of characters for a csv record of GraphData.
+
+graph/graphData.cpp (line 145)
+	Change '20' to RVSIZE.
+i.e.		
+	char buf[gtop*RVSIZE]; //should be plenty with some to spare
+	getTestDataCSV(buf);
+
+
+MALT4_TCP_V1.0 20201030
+=======================
+Upgrade to Netburner v2.9.3
+
+These changes are additional to those documented in MALT_DEV_V2.9_20201029
+(...should be only related to tcp and graph folders)
+
+- cmdprocessor.cpp
+	Warning (line 126) --unused variable str removed.
+	//char * str = f_fgets(buf, 512, file);
+	f_fgets(buf, 512, file);
+
+	(line 198) 
+	strptime(&pch[1], "%Y-%m-%d-%H-%M-%S", &dt);
+	-- (non-standard) function strptime() no longer available in time.h (cf line 90)
+	
+	changed to:
+		sscanf(&pch[1], "%4d-%2d-%2d-%2d-%2d-%2d",
+				&year, &month, &dt.tm_mday, &dt.tm_hour, &dt.tm_min, &dt.tm_sec);
+
+-formcode.cpp
+	(line724) Changed default spare string from "" to "-" (so that the string is not null.
+	strcpy(NV_Params.TestSetupNV[i].fixturecontrol.sparestring20, "-");
+
+MALT4_TCP_V1.0 20201026
+==============
+Development of TCP/IP interface. 
+The aim is to provide a MALT API using TCP/IP communication protocol to allow third 
+party programs to control and configure the MALT and to receive logging data.
+
+tcp folder added to encapsulate tcp functionality.
+Added tcp server task initialisation to main: lines 185-193
+
+- main.cpp
+	add line 25 #include "tcp/tcp_server.h"  // MALT Serial RS232 input
+	add line 52 DWORD tcpServerTaskStack[USER_TASK_STK_SIZE];
+	
+	add tcp server task starting at line 184
+	//-----------------TCP server--------------------
+	// Create and launch the tcp_server task. Note: need to set the right priority.
+	// ---- to disuss...
+	if (OSTaskCreate(tcpServerTask, (void  *) TCP_LISTEN_PORT,
+			(void *) &tcpServerTaskStack[USER_TASK_STK_SIZE],
+			(void *) tcpServerTaskStack, MAIN_PRIO - 4) != OS_NO_ERR)
+	{
+		SysLog("*** Error creating tcp_server_Task\r\n");
+	}
+	//-----------------------------------------------
+
+- graph/graphData.h and graphData.cpp
+	#include<time.h>
+	#define MAXRV  1000//was 100
+	
+	include 'step'
+	struct GraphData {
+		int 	step;		//test sequence step number
+		...
+	
+	void pushGraphData(int step, int testp, int diffp, DWORD duration);
+		
+	Added functions to fetch latest set of test/graph data
+		void startGraphData();	//called in test_seq.cpp
+		void endGraphData();	//called in test_seq.cpp
+		void getTestDataCSV(char * buf);
+		
+	and save the graph data to file
+		void saveGraphData(tm dt);
+
+- graphData.cpp
+	Quite few revisions to the code to (a) capture the graph data between 
+	start and end calls. And to export to file system in the same folder as the result csv.  
+
+- test_seq.cpp
+	Need to signal whem to start and stop data capture.
+	[ originally here
+	  //startGraphData(); 	//line 606 (end of RESETSTEP)
+	]
+	now moved to after fixtures, and taking advantage oflogNow flag
+	to activate first time through (about line 855).  
+	     case VENTOFFSTEP:
+	       if (!logNow) startGraphData(); // ---LZ Sep 2020, first time through only
+	       logNow = TRUE; //Start logging data	
+	add
+		endGraphData();		//line 1195 (end of EVACSTEP)
+
+	add 'step' to data collection (about line 1607)
+		pushGraphData(
+        	stepCount, //LZ Oct 2020
+        	testp,
+        	...
+
+- resulsComms.cpp
+	Added line to save graphData to memory card immediately after writing results 
+	(about line 256)
+		if (NV_Params.OptionsNV.option3) saveGraphData(pData->dateTime);
+	conditional on option3 not being zero.
+	
+	Also need to include
+		#include "graph/graphData.h" //LZ 2020-09
+		
+- formcode.cpp
+	added missing initialisation of 'spare' fields starting at line 688
+		//lz Sep 2020
+		NV_Params.TestSetupNV[i].spareint10 = 0; //Spare for future use
+		NV_Params.TestSetupNV[i].spareint11 = 0; //Spare for future use
+		NV_Params.TestSetupNV[i].spareint12 = 0; //Spare for future use
+		NV_Params.TestSetupNV[i].spareint13 = 0; //Spare for future use
+		NV_Params.TestSetupNV[i].spareflag10 = false; //Spare for future use
+		NV_Params.TestSetupNV[i].spareflag11 = false; //Spare for future use
+		NV_Params.TestSetupNV[i].spareflag12 = false; //Spare for future use
+		NV_Params.TestSetupNV[i].spareflag13 = false; //Spare for future use
+		//--- end lz Sep-2020
+	and then starting at line 711
+		NV_Params.TestSetupNV[i].fixturecontrol.spareint20 = 0;
+	    NV_Params.TestSetupNV[i].fixturecontrol.spareint21 = 0;
+	    NV_Params.TestSetupNV[i].fixturecontrol.spareint22 = 0;
+	    NV_Params.TestSetupNV[i].fixturecontrol.spareint23 = 0;
+	    NV_Params.TestSetupNV[i].fixturecontrol.spareflag20 = false;
+	    NV_Params.TestSetupNV[i].fixturecontrol.spareflag21 = false;
+	    NV_Params.TestSetupNV[i].fixturecontrol.spareflag22 = false;
+	    NV_Params.TestSetupNV[i].fixturecontrol.spareflag23 = false;
+	    strcpy(NV_Params.TestSetupNV[i].fixturecontrol.sparestring20, "");	
+		
+
+MALT_DEV_V2.8_20200313
+=======================
+html/graph changes.
+	Stop graphing after EVACSTEP
+	Set DP axis to fixed values -10 to dpAlarm*1.1 (no auto-scaling on DP Min value) 
+	Set initial max of time axis to 18 sec (was 20). (will auto-scale if required)
+	Changed stage font to white
+
+MALT_DEV_V2.8B_20200305
+=======================
+Used on BAE8.
+
+Updated Graph scaling files in html/graph.
+
+Added serialInputTask which checks for serial data text string input from
+a Barcode reader and saves this text with the Results on SD Card and ethernet output.
+Option Parameter Part ID specifies :
+ - Barcode can be optional, not required, but saved if entered before the
+   start of the test. Part ID = 0.
+ - Required in order for the test to Start AND must be longer than a minimum
+   number of characters. Part ID = min characters.
+ 
+
+MALT_DEV_v2.8_20200302
+======================
+Renamed to MALT_DEV_v2.8_20200302
+Used on BAE8
+
+
+
+MALT4_G1.0_20191107
+======================
+Add functionality to Import and Export All Settings.
+
+fixtureControl.html (aka Advanced)
+	
+	line 127..143: added form for import/export
+	
+	Moved functionality to apply fixture settings from [Back to Config] button to
+	[Apply] button.
+	Navigation in footer is now a simple page change back to Config.
+	
+	(Note also that importing a config does not automatically update the fields in the 
+	fixture settings on the page. You need to 'refresh' the page) 
+	
+	Some realignment of blocks <form><div><span>: to accommodate the additional <form>
+	
+	Fixed typo in footer class-"nav" becomes class="nav".
+
+microLeakTest.css
+	lines 260..273: additional styles for inout, inout *, and input.filename
+
+formcode.cpp
+	Added
+		line 36: #define EXPORTIMPORT 5
+		line 420: added block for
+		 	else if (ExtractPostData("inout", pData, data, SIZEOF_DATA) != -1) {
+		 		...
+		 	}
+
+	Note: requires #include "importexport/userParameters.h" //import and export functions
+
+main.cpp
+	Added serviceMemoryCardReq(); to main loop.
+	 	Apparently, this needs to be in the main loop as EFFS has been initiated for MAIN task
+	Note: requires #include "importexport/userParameters.h" //import and export functions
+
+"importexport" folder created which contains all the functionality to save and load
+	settings data from/to SD card. i.e.	userParameters.h/.cpp
+	  
+
+
+MALT4_G1.0_20191107
+======================
+Starting point is MALT_DEV_2.6.
+Objective: Add a graph of leak test.
+
+------------------------------------------------------------------		
+To include graphing in any other MALT project:
+	- Make the changes described in Modifications to current files'
+	- Copy and paste the 'graph' folder in root
+	- Copy and paste the 'graph' folder in html
+------------------------------------------------------------------		
+
+Initial design decisions: 
+- For minimal disruption the graph is be on a separate page linked to landing page.
+- Keep fixed size page with same header and footer frame.
+
+Modification to current files
+-----------------------------
+index.htm
+	Add "Graph" button with navigation link to graph.html
+	<footer>
+		<span id="status"><!-- Ajax generated footer goes here. See status.html --></span>
+		<span style="float: right;">
+this line--> <button type="text" name="graphbtn" value="98" onclick="clearAllIntervals(); window.location.href = 'graph.html';" >Graph...</button>
+
+test_seq.cpp
+	Afer line 1592...
+            leakTestSeq(); // Process Leak Test A sequence
+	add the following to collect graph data points
+            //log graph data ---LZ Nov 2019
+        	if (gPitCount[1]%40==0) { //every 40 beats (millisec)
+        		pushGraphData(
+        				testp,
+        				(stepCount==MEASURESTEP || stepCount==PASSSTEP)? calcCorrectedDiffp() : diffp,
+        				gPitCount[1] //duration()+getChainedDuration()
+        		);
+        	}
+        	
+	Also changed line 547 (in RESETSTEP) to 
+		testConfigA = appliedConfig; //was 0;
+	This means that the testConfig index is retained from the previous test until 
+	and unless a different test config is selected. This makes the web feedback more 
+	consistent (i.e. does not revert to 0 after a test).  
+
+
+htmlvar.h
+	Add the following function header 
+		//support for graph - LZ nov 2019
+		const char * getHTMLRunningValues(int sock,int v);
+
+Additional files in project root folder
+---------------------------------------
+New folder 'graph' containing
+	graphData.h/cpp: this file has 
+		a push function to collect graph data,
+			i.e running values of testp, diffp and test duration;
+		a pull(n) function that retrieves the most recent 'n' graph data values and 
+			some test parameters required to draw and scale the graph. The data is returned 
+			as a string in JSON format for ease of interpretation in the javascript.
+
+	ajaxGraphFunctions.cpp
+		Ajax callback function used in graphdata.html
+
+Additional files in 'html' folder
+---------------------------------
+New 'graph' folder containing
+	graph.html - the html page hosting the graph. 
+		Also includes test selection/start/reset and test status line for context
+	graph.css: additional styles used in graph.html
+	graph.js: javascript for graph.html page: sets interval for updating test status, clock and graph 
+
+	zoomgraph.js - code that draws the graph within the <div id="graph"></div> element of graph.html
+	zoomgraph.css - styles used in zoomgraph.js
+
+	graphdata.html - elements populated using Ajax callback functions. This page is updated 
+		every 200ms, i.e. setInterval(function(){processPage('graphdata.html',...., 200)
+	
+	d3.v4.min.js - D3.js is a JavaScript library for manipulating documents based on data.
+	d3.min.js.LICENSE - associated licence.
+		- Downloaded from https://d3js.org/
+
+Bug fixes
+=========
+Added character encoding to each .html page.
+	<meta charset="UTF-8">
+
+microLeakTest.css
+	.calibration
+		replace height: 94%;
+		with 	width: 95%;
+  

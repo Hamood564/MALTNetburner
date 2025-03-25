@@ -1,0 +1,130 @@
+<html>
+<head>
+	<title>TQC Micro Leak Tester</title>
+	<link rel="stylesheet" type="text/css" href="microLeakTest.css">
+	<script src="authentication.js"></script>
+	
+	<meta name="version" content="Single_MALT_v1">
+	<meta name="lastmodified" content="2016-02-26">
+</head>
+
+<body>
+
+	<header>
+		<img id="tqclogo" src="TQC_Auto_test.gif" alt="TQC Automation" >
+		<h1>Micro Apps Leak Tester (MALT)</h1>
+	</header>
+	
+	<form id="CalibParams" action="" method="post">
+		<main>
+			<br>
+			<div class="parameters">
+				<fieldset>
+					<legend>
+						Calibration Data				
+					</legend>
+				
+					<table class="variants">
+						<tr>
+							<th>&nbsp;</th>
+							<th class="centre" colspan="2">Module A</th>
+							<th class="centre" colspan="2">Module B</th>
+						</tr>
+						<tr>
+							<th>&nbsp;</th>
+							<th class="left">Diff Pres</th>
+							<th class="left">Test Pres</th>
+							<th class="left">Diff Pres</th>
+							<th class="left">Test Pres</th>
+						</tr>
+						<tr>
+							<td><label>Value Max</label></td>
+							<td><input type="text" name="diffvaluemaxA" value=<!--VARIABLE getHtmlCalib(fd, 50) --> ></td>
+							<td><input type="text" name="testvaluemaxA" value=<!--VARIABLE getHtmlCalib(fd, 60) --> ></td>
+							<td><input type="text" name="diffvaluemaxB" value=<!--VARIABLE getHtmlCalib(fd, 70) --> ></td>
+							<td><input type="text" name="testvaluemaxB" value=<!--VARIABLE getHtmlCalib(fd, 80) --> ></td>
+						</tr>
+						<tr>
+							<td><label>Count Max</label></td>
+							<td><input type="text" name="diffcountmaxA" value=<!--VARIABLE getHtmlCalib(fd, 51) --> ></td>
+							<td><input type="text" name="testcountmaxA" value=<!--VARIABLE getHtmlCalib(fd, 61) --> ></td>
+							<td><input type="text" name="diffcountmaxB" value=<!--VARIABLE getHtmlCalib(fd, 71) --> ></td>
+							<td><input type="text" name="testcountmaxB" value=<!--VARIABLE getHtmlCalib(fd, 81) --> ></td>
+						</tr>
+						<tr>
+							<td><label>&nbsp;</label></td>
+							<td><button type="submit" name="calmax" value="50" >Set</button></td>
+							<td><button type="submit" name="calmax" value="60" >Set</button></td>
+							<td><button type="submit" name="calmax" value="70" >Set</button></td>
+							<td><button type="submit" name="calmax" value="80" >Set</button></td>
+						</tr>
+						<tr>
+							<td><label>Value Min</label></td>
+							<td><input type="text" name="diffvalueminA" value=<!--VARIABLE getHtmlCalib(fd, 52) --> ></td>
+							<td><input type="text" name="testvalueminA" value=<!--VARIABLE getHtmlCalib(fd, 62) --> ></td>
+							<td><input type="text" name="diffvalueminB" value=<!--VARIABLE getHtmlCalib(fd, 72) --> ></td>
+							<td><input type="text" name="testvalueminB" value=<!--VARIABLE getHtmlCalib(fd, 82) --> ></td>
+						</tr>
+						<tr>
+							<td><label>Count Min</label></td>
+							<td><input type="text" name="diffcountminA" value=<!--VARIABLE getHtmlCalib(fd, 53) --> ></td>
+							<td><input type="text" name="testcountminA" value=<!--VARIABLE getHtmlCalib(fd, 63) --> ></td>
+							<td><input type="text" name="diffcountminB" value=<!--VARIABLE getHtmlCalib(fd, 73) --> ></td>
+							<td><input type="text" name="testcountminB" value=<!--VARIABLE getHtmlCalib(fd, 83) --> ></td>
+						</tr>
+						<tr>
+							<td><label>&nbsp;</label></td>
+							<td><button type="submit" name="calmin" value="52" >Set</button></td>
+							<td><button type="submit" name="calmin" value="62" >Set</button></td>
+							<td><button type="submit" name="calmin" value="72" >Set</button></td>
+							<td><button type="submit" name="calmin" value="82" >Set</button></td>
+						</tr>
+						<tr>
+							<td><label>Gradient</label></td>
+							<td><input type="text" name="diffgradientA" value=<!--VARIABLE getHtmlCalib(fd, 54) --> ></td>
+							<td><input type="text" name="testgradientA" value=<!--VARIABLE getHtmlCalib(fd, 64) --> ></td>
+							<td><input type="text" name="diffgradientB" value=<!--VARIABLE getHtmlCalib(fd, 74) --> ></td>
+							<td><input type="text" name="testgradientB" value=<!--VARIABLE getHtmlCalib(fd, 84) --> ></td>
+						</tr>
+						<tr>
+							<td><label>Offset</label></td>
+							<td><input type="text" name="diffoffsetA" value=<!--VARIABLE getHtmlCalib(fd, 55) --> ></td>
+							<td><input type="text" name="testoffsetA" value=<!--VARIABLE getHtmlCalib(fd, 65) --> ></td>
+							<td><input type="text" name="diffoffsetB" value=<!--VARIABLE getHtmlCalib(fd, 75) --> ></td>
+							<td><input type="text" name="testoffsetB" value=<!--VARIABLE getHtmlCalib(fd, 85) --> ></td>
+						</tr>
+						<tr id = "busy">
+							<td><label>Calibration</label></td>
+							<!-- Ajax generated Start/Stop buttons. See ajaxCallbackFunctions.cpp -->
+							<!--VARIABLE getHtmlBusy(fd,0) -->
+							<!--VARIABLE getHtmlBusy(fd,1) -->
+							<!--VARIABLE getHtmlBusy(fd,2) -->
+							<!--VARIABLE getHtmlBusy(fd,3) -->
+						</tr>
+
+					</table>
+				</fieldset>
+
+				<span style="float: right;">
+					<button type="submit" id="revert" name="revert" value="2" onclick="this.form.submit()">Revert</button>
+					<button type="submit" id="appl" name="apply" value="2" onclick="this.form.submit()">Apply</button>
+				</span>
+							
+			</div>
+	   </main>
+
+		<footer>
+			<button type="submit" name="saveParams" value="2" onclick="this.form.submit()">Save</button>
+			<button type="submit" name="getParams" value="2" onclick="this.form.submit()">Load</button>
+
+			<span style="float: right;">
+				<input type="button"  class="nav" value="Config..." onclick="window.location.href='config.html';" />
+				<input type="button"  class="nav" value="Options..." onclick="window.location.href='options.html';" />
+				<input type="button"  disabled class="nav" value="Calibration..." onclick="window.location.href='calibration.html';" />
+				<input type="button"  class="nav" value="Done" onclick="window.location.href='index.htm';" />
+				<span id="authentication" style="visibility: hidden;"><!--CPPCALL getHTMLAuthentication --> </span>
+			</span>
+	   </footer>
+   </form>
+</body>
+</html>

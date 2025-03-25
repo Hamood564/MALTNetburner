@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>TQC Micro Leak Tester</title>
+	<link rel="icon" type="image/x-icon" href="images/Malt.ico">
+	<link rel="stylesheet" type="text/css" href="microLeakTest.css">
+	<script src="fixtureControl.js"></script>
+
+	<meta name="version" content="MALT_DEV_v1_7">
+	<meta name="lastmodified" content="2016-06-22">
+</head>
+
+<body>
+
+	<header>
+		<img id="tqclogo" src="TQC_Auto_test.gif" alt="TQC Automation" >
+		<h1>Micro Apps Leak Tester (MALT)</h1>
+	</header>
+	
+	<main>
+		<br>
+		<div class="parameters">
+		<form name="TestParams>Fixture Control" value="100" action="" method="post">	
+				<fieldset>
+					<legend>
+						Test Configuration: <!--CPPCALL getHTMLSelectedConfig -->						
+					</legend>
+					<table class="fixture">
+						<tr>
+							<th>&nbsp;</th>
+							<th class="left">Enable</th>
+							<th class="left">Time (s)</th>
+							<th class="left">Feedback
+								<span class="info" title="Advanced Test Configuration Options")>&nbsp;?&nbsp;</span>
+							</th>
+						</tr>
+						<tr>
+							<td>
+								<label>Fixture Stage 1</label>
+							</td>
+							<td>
+								<input type="checkbox" name="enablecontrol1" <!--VARIABLE getHtmlFixtureParam(fd, 0) --> >
+							</td>
+							<td>
+								<input type="text" name="fixturetime1" value=<!--VARIABLE getHtmlFixtureParam(fd, 1) --> >
+							</td>
+							<td>
+								<input type="checkbox" name="enablefeedback1" <!--VARIABLE getHtmlFixtureParam(fd, 2) --> >
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Fixture Stage 2</label>
+							</td>
+							<td>
+								<input type="checkbox" name="enablecontrol2" <!--VARIABLE getHtmlFixtureParam(fd, 10) --> >
+							</td>
+							<td>
+								<input type="text" name="fixturetime2" value=<!--VARIABLE getHtmlFixtureParam(fd, 11) --> >
+							</td>
+							<td>
+								<input type="checkbox" name="enablefeedback2" <!--VARIABLE getHtmlFixtureParam(fd, 12) --> >
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Fixture Stage 3</label>
+							</td>
+							<td>
+								<input type="checkbox" name="enablecontrol3" <!--VARIABLE getHtmlFixtureParam(fd, 20) --> >
+							</td>
+							<td>
+								<input type="text" name="fixturetime3" value=<!--VARIABLE getHtmlFixtureParam(fd, 21) --> >
+							</td>
+							<td>
+								<input type="checkbox" name="enablefeedback3" <!--VARIABLE getHtmlFixtureParam(fd, 22) --> >
+							</td>
+						</tr>	
+						<tr>
+							<td>
+								<label>Pass Mark</label>
+							</td>
+							<td>
+								<input type="checkbox" name="enablepassmark"	<!--VARIABLE getHtmlFixtureParam(fd, 30) --> >
+							</td>
+							<td>
+								<input type="text" name="passmarktime" value=<!--VARIABLE getHtmlFixtureParam(fd, 31) --> >
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<label> Fail Acknowledgement </label>
+							</td>
+							<td>
+								<input type="checkbox" name="enablefailack"	<!--VARIABLE getHtmlFixtureParam(fd, 32) --> >
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<label>Fill to Test Pressure</label>
+							</td>
+							<td>
+								<input type="checkbox" name="enablefillToPres"	<!--VARIABLE getHtmlFixtureParam(fd, 40) --> >
+							</td>
+							<td>
+								<input type="text" name="fillToPrestime" value=<!--VARIABLE getHtmlFixtureParam(fd, 41) --> >
+								<span class="info" title="Fill to test pressure plus this time">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>						
+	
+					</table>					
+	
+					<div class="clearfloat"></div><!-- lz note: see HTML5 'float' layout attribute -->
+	
+					<div style="float: right;">
+						<button type="submit" class="nav" name="apply" value="4">Apply</button>
+					</div>
+	
+				</fieldset>
+	
+				<span style="visibility: hidden;">Selected config:				
+					<span id="selectedConfig" ><!--CPPCALL getHTMLSelectedConfig --></span>
+				</span>
+
+		</form>	
+		
+			<form action="" method="post" onsubmit="validateIO();">
+				<fieldset>
+					<legend>
+						Import and Export Settings						
+					</legend>
+					<div class="inout">
+						<span style="font-size: 75%;">
+							Export<input type="radio" name="inout" value="0" id="exportAll"><br> <!-- checked -->
+			  				Import<input type="radio" name="inout" value="1" id="importAll">
+ 		  				</span>
+						<span style="padding-top:10px;">
+							<input type="text" class="filename" name="filename" placeholder="filename"  id="filename">
+							<span class="info" title="Filename up to 8 characters and extension e.g. SOMENAME.CFG">&nbsp;?&nbsp;</span>
+							<button type="submit" name="page" value="5">Import/Export All Settings</button>
+						</span>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</main>
+			
+	<footer>
+		<span style="float: right;">
+			<input type="button"  class="nav" style="width:140px;" value="Back to Config..." onclick="window.location.href='config.html';" />
+			<span id="authentication" style="visibility: hidden;"><!--CPPCALL getHTMLAuthentication --> </span>
+		</span>
+   </footer>
+ 
+ </body>
+</html>

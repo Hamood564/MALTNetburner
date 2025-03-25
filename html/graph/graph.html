@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"> 
+	<title>TQC Micro Leak Tester</title>
+	<link rel="icon" type="image/x-icon" href="../images/Malt.ico">
+	<link rel="stylesheet" type="text/css" href="../microLeakTest.css">
+	<link rel="stylesheet" type="text/css" href="graph.css">
+	<link rel="stylesheet" type="text/css" href="zoomgraph.css">
+	
+	<!--script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script-->
+	<script src="d3.v4.min.js"  charset="utf-8"></script>
+	<script src="graph.js"></script>
+
+	<meta name="version" content="MALT4_G1.0">
+	<meta name="lastmodified" content="2019-11-26">
+</head>
+
+<body>
+	<noscript>
+		<h1>MALT requires JavaScript to be enabled in your browser.</h1>
+	</noscript>
+
+	<header>
+		<img id="tqclogo" src="../TQC_Auto_test.gif" alt="TQC Automation" >
+		<h1>Micro Apps Leak Tester (MALT)</h1>
+	</header>
+
+	<main>
+		<div id="moduleA" class="middlewide">
+			<!--div id="dataA"><!-- Ajax generated table goes here. See dataTableA.html --></div-->
+		
+			<form id="controlButtonsA" action="" method="post">
+	
+				<select id="selectedTest" style="width:140px;" name="applyTest" onchange="this.form.submit();" 
+						  title="Select leak test parameter configuration" >
+					<option value="0"><!--VARIABLE getHtmlConfigLabel(fd, 0) --></option>
+					<option value="1"><!--VARIABLE getHtmlConfigLabel(fd, 1) --></option>
+					<option value="2"><!--VARIABLE getHtmlConfigLabel(fd, 2) --></option>
+					<option value="3"><!--VARIABLE getHtmlConfigLabel(fd, 3) --></option>
+					<option value="4"><!--VARIABLE getHtmlConfigLabel(fd, 4) --></option>
+					<option value="5"><!--VARIABLE getHtmlConfigLabel(fd, 5) --></option>
+					<option value="6"><!--VARIABLE getHtmlConfigLabel(fd, 6) --></option>
+					<option value="7"><!--VARIABLE getHtmlConfigLabel(fd, 7) --></option>
+					<option value="8"><!--VARIABLE getHtmlConfigLabel(fd, 8) --></option>
+					<option value="9"><!--VARIABLE getHtmlConfigLabel(fd, 9) --></option>
+					<option value="10"><!--VARIABLE getHtmlConfigLabel(fd, 10) --></option>
+					<option value="11"><!--VARIABLE getHtmlConfigLabel(fd, 11) --></option>
+					<option value="12"><!--VARIABLE getHtmlConfigLabel(fd, 12) --></option>
+					<option value="13"><!--VARIABLE getHtmlConfigLabel(fd, 13) --></option>
+					<option value="14"><!--VARIABLE getHtmlConfigLabel(fd, 14) --></option>
+					<option value="15"><!--VARIABLE getHtmlConfigLabel(fd, 15) --></option>
+				</select>
+	
+				<button type="submit" name="startA" value="1" >Start</button>
+				<button type="submit" name="resetA" value="2" >Reset</button>
+
+			<span id="PassFailB"> <!-- style="width:30%; float: left;"-->
+				<!-- Ajax generated results goes here. See passfailB.html -->
+			</span>			
+			<span> <!-- style="width:30%; float:left;"-->
+				<span id="currentState" class="stage"><!-- ajax callback: see graphdata.html--></span>
+			</span>
+			</form>
+
+		</div>
+		
+		<!--div class="graphcontent"> <!-- style to be defined... -->
+			<span id="readings"> 
+				<!-- running data updated by ajax callbacks: see graphdata.html-->
+				<span style="display:none;">
+					<span id="tp" class="val"><!--VARIABLE getHtmlParam(fd, 0) --></span> 		
+					<span id="tptol" class="val"><!--VARIABLE getHtmlOption(fd, 103) --></span> <!-- test pressure tolerance -->
+					<span id="testprog" class="val"><!--CPPCALL getHTMLAppliedConfig --></span>
+					<span id="alarmdp"  class="val"><!--VARIABLE getHtmlParam(fd, 9) --></span> //LZ 2020-03-06
+					<span id="stepCount"><!--CPPCALL getHTMLStepCount --></span>
+				</span>		
+			</span>
+
+			<div id="graph"></div>
+			<script src="zoomgraph.js"  charset="utf-8"></script>
+		<!--/div-->
+
+		<div class="clearfloat"></div><!-- lz note: see HTML5 'float' layout attribute -->
+
+	</main>
+
+	<footer>
+		<span id="status"><!-- Ajax generated footer goes here. See status.html --></span>
+		<span style="float: right;">
+			<button type="text" name="homebtn" value="98" onclick="window.location.href = '../index.htm';" >Home</button>
+			<span id="appliedConfig" style="visibility: hidden;"><!--CPPCALL getHTMLAppliedConfig --><span>
+			<span id="authentication" style="visibility: hidden;"><!--CPPCALL resetAuthentication --></span>
+		</span>
+   </footer>
+
+</body>
+</html>

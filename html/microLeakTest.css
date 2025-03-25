@@ -1,0 +1,273 @@
+header {
+	width:700px; 
+	height: 70px;
+	margin-top: -20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #dddddd;
+}
+
+#tqclogo { 
+	float:right; 
+	width:152px; 
+	height:61px; 
+}
+
+main {
+	width: 700px;
+	height: 500px;
+	margin-top: -20px;
+	background-color: #7a96ea;
+	padding-top: 10px;
+}
+
+.floatLeft
+{
+	width: 330px;
+	float: left; 
+	padding-left: 20px;
+}
+
+.middle {
+    margin-left: auto;
+    margin-right: auto;
+    width: 330px; /*330px;*/
+}
+
+.middlewide {
+    margin-left: auto;
+    margin-right: auto;
+    width: 650px; /*330px;*/
+}
+
+.parameters, .options, .calibration {
+	height: 90%;
+	background-color: #ccccff;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:auto;
+	margin-bottom:0;	
+	padding: 10px;
+}
+
+.parameters {
+	width: 95%;	
+}
+.options {
+	width: 95%;
+}
+
+.calibration {
+	width: 95%; 
+	/*height: 94%;*/
+}
+
+footer {
+	width:690px; 
+	height: 20px;
+	padding: 5px;
+	background-color: #dddddd;
+}
+
+#controlButtonsA, #controlButtonsB  {
+	padding: 20px;
+	padding-left: 0px;
+}
+
+body {	
+	font-family: 'Arial', Helvetica, sans-serif, Inglis; 
+	font-size:100%
+}
+
+.clearfloat {
+    clear: both;
+}
+
+/* simple table property */
+table { 
+	/*border: 2px solid black; */
+	font-size: 0.875em;
+	background-color: #dddddd;
+}
+
+table.common {
+	border: 0px none;
+	font-size: 0.750em;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:auto;
+	margin-bottom: auto;	
+/*	padding: 20px;*/
+}
+
+fieldset.pwd {
+	width: 50%;
+	margin: auto;
+	text-align: center;
+	background-color: #dddddd;
+}
+
+table.pwd {
+	width: 75%;
+	margin:auto;
+}
+
+table.variants {
+	border: 0px none;
+	font-size: 0.750em;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:10px;
+	margin-bottom: auto;	
+/*	padding: 20px;*/
+}
+
+table.option {
+	border: 0px none;
+	font-size: 0.750em;
+/*	width: 47%;*/
+	float: left;
+	margin-left: 10px;
+	margin-right: auto;
+	margin-top:10px;
+	margin-bottom: auto;	
+/*	padding: 20px;*/
+}
+
+table.fixture {
+	border: 0px none;
+	font-size: 0.750em;
+	width: 60%;
+	float: left;
+	margin-left: 10px;
+	margin-right: auto;
+	margin-top:10px;
+	margin-bottom: auto;	
+/*	padding: 20px;*/
+}
+
+th, td {padding: 5px; }
+th {text-align: center; }
+th.left {text-align:left;	}
+td.centre {text-align:center;}
+td.right {text-align:right;  width: 50px; }
+
+/*
+label {
+	max-width: 100px;
+}
+*/
+label.hhmmss {
+	display: inline-block; 
+	width: 20px;
+	font-size: 0.750em; 
+}
+
+input[type="text"] {
+    padding-left: 5px;    
+    max-width: 60px;
+}
+
+input.pwd {
+    padding-left: 5px;
+    max-width: 100%;    
+}
+
+input.small {
+    width: 30px;
+    height: 20px;
+    font-size: 0.850em;
+}
+input.time {
+    padding-left: 5px;    
+}
+
+input.hhmmss {
+    padding-left: 5px;
+    max-width: 30px;    
+}
+
+.circle {
+	display:inline-block;
+	width:50px;
+	height:50px;
+	border-radius:50px;
+	font-size:20px;
+	line-height:50px;
+	text-align:	center;
+}
+
+.info {
+	margin-top: 5px;
+	border-radius:20px;
+	font-size: 0.750em; 
+   font-style: italic;
+	color:#eeeeee;
+	background:#7a96ea;
+	float: right; 
+	/*visibility: hidden;*/
+}
+
+.version {
+	margin-top: 5px;
+	/*border-radius:20px;*/
+	font-size: 0.750em; 
+   	font-style: italic;
+	/*color:#ffffff;*/
+	/*background:#7a96ea;*/
+	float: right; 
+	/*visibility: hidden;*/
+}
+
+span.info {
+	margin-top: 0px;
+}
+.pass {
+	color:#0000ff;
+	background:#00ff00;
+}
+.fail {
+	color:#ffff00;
+	background:#ff0000;
+}
+.error {
+	color:#000000;
+	background:#ffff00;
+}
+.done {
+	color:#ffffff;
+	background:#0000ff;
+}
+.neutral {
+	color:#aaaaaa;
+	background:#777777;
+}
+
+button.green {
+/* 'green' is default style */
+}
+
+button.red {
+	color:#ff0000;
+}
+
+button.nav, input.nav[type="button"] {
+    width: 85px;    
+}
+
+.inout{
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.inout * {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+input.filename {
+    padding-left: 5px;    
+    max-width: 130px;
+}

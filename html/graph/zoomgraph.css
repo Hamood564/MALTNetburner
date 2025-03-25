@@ -1,0 +1,82 @@
+.axis path, .axis line {
+		fill: none;
+		stroke: #000;
+		/*stroke-width: 2px;
+		shape-rendering: crispEdges;*/
+}
+
+path.line {
+	fill: none;
+	stroke-width: 1px;
+}
+
+path.line0 {
+	stroke:blue;
+}
+
+path.line1 {
+	stroke:red;
+}
+path.line2, path.line3 {
+	stroke:green;
+	stroke-dasharray: 4,4;	
+}
+
+.zoomResetBtn {
+	fill: #667292; /*#66a;*/
+	/*fill-opacity: 0.3;*/
+	cursor: pointer;
+	/*margin-top:  50px;*/
+}
+
+.zoomResetBtn:hover {fill: #aaa;}
+
+.zoomResetText {
+	pointer-events: none;
+	fill : white; /*#ccc;*/
+	font-size: 2.5vw;
+}
+
+#graph svg {
+	width:95%;
+	/*display: inline-block;
+	position: relative;*/
+	background-color: lavender;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	margin-top: 0px;
+}
+
+.xaxis, .leftaxis, .rightaxis {
+	font-size: 2.5vw; /*proportion of viewport width*/
+}	
+
+text.xaxis {
+	fill: black; /*#667292;*/
+}
+text.leftaxis {
+	fill: blue;
+}
+text.rightaxis {
+	fill: red;
+}
+/*
+#graph {
+	cursor: zoom-in;	
+}
+*/	
+.innerg rect {
+	cursor: zoom-in;	
+}
+
+.innerg rect:active {
+	cursor: all-scroll;	
+}
+
+@media screen and (min-width: 760px) {
+	.xaxis, .leftaxis, .rightaxis, .zoomResetText {
+		font-size: 16px; 
+	}	
+
+}
+

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>TQC Micro Leak Tester</title>
+	<link rel="icon" type="image/x-icon" href="images/Malt.ico">
+	<link rel="stylesheet" type="text/css" href="microLeakTest.css">
+	<script src="ajaxOptions.js"></script>
+
+	<meta name="version" content="Single_MALT_v1">
+	<meta name="lastmodified" content="2016-02-26">
+</head>
+
+<body>
+
+	<header>
+		<img id="tqclogo" src="TQC_Auto_test.gif" alt="TQC Automation" >
+		<h1>Micro Apps Leak Tester (MALT)</h1>
+	</header>
+
+	<main>
+		<br>
+		<div class="options">
+			<form id="OptionParams" action="" method="post">
+				<fieldset>
+					<legend>
+						Options				
+					</legend>
+				
+					<table class="option">
+						<tr>
+							<td>
+								<label>Remote port for results</label>
+							</td>
+							<td>
+								<input type="text" name="logPort" value=<!--VARIABLE getHtmlOption(fd, 100) --> >
+								<span class="info" title="Remote port for UDP result output">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Remote IP address</label>
+							</td>
+							<td>
+								<input type="text" name="logIP" value=<!--VARIABLE getHtmlOption(fd, 101) --> >
+								<span class="info" title="Remote IP address">&nbsp;?&nbsp;</span>
+							</td>
+							<!-- ip regex
+							pattern = "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.
+							([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])"	
+							-->
+						</tr>
+						<tr>
+							<td>
+								<label>Log level (0..3)</label>
+							</td>
+							<td>
+								<input type="text" name="loglevel" value=<!--VARIABLE getHtmlOption(fd, 102) --> >
+								<span class="info" title="0=Always, 1=High, 2=Medium, 3=Low">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Tol. for test pressure (&#177; %)</label>
+							</td>
+							<td>
+								<input type="text" name="testpTol" value=<!--VARIABLE getHtmlOption(fd, 103) --> >
+								<span class="info" title="Tolerance for test pressure (&#177; %)">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Abort diff pressure (Pa)</label>
+							</td>
+							<td>
+								<input type="text" name="diffpAbort" value=<!--VARIABLE getHtmlOption(fd, 104) --> >
+								<span class="info" title="Abort test at this threshold of diff pressure (Pa)">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Ref -ve alarm pressure (Pa or mbar)</label>
+							</td>
+							<td>
+								<input type="text" name="diffpNegAlarm" value=<!--VARIABLE getHtmlOption(fd, 105) --> >
+								<span class="info" title="Reference negative alarm pressure (Pa)">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Identifier for module</label>
+							</td>
+							<td>
+								<input type="text" name="LTA_ID" value=<!--VARIABLE getHtmlOption(fd, 106) --> >
+								<span class="info" title="Single character">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label> Start Enable </label>
+							</td>
+							<td>
+								<input type="checkbox" name="startenable"	<!--VARIABLE getHtmlOption(fd, 107) --> >
+								<span class="info" title="Check fixture is ready at start of test sequence">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+					</table>
+
+					<table class="option">
+						<tr>
+							<td>
+								<label>Option 1</label>
+							</td>
+							<td>
+								<input type="text" name="option1" value=<!--VARIABLE getHtmlOption(fd, 110) --> >
+								<span class="info" title="Option 1">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Option 2</label>
+							</td>
+							<td>
+								<input type="text" name="option2" value=<!--VARIABLE getHtmlOption(fd, 111) --> >
+								<span class="info" title="Option 2">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Option 3</label>
+							</td>
+							<td>
+								<input type="text" name="option3" value=<!--VARIABLE getHtmlOption(fd, 112) --> >
+								<span class="info" title="Option 3">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Option 4</label>
+							</td>
+							<td>
+								<input type="text" name="option4" value=<!--VARIABLE getHtmlOption(fd, 113) --> >
+								<span class="info" title="Option 4">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Part ID (Barcode)</label>
+							</td>
+							<td>
+								<input type="text" name="option5" value=<!--VARIABLE getHtmlOption(fd, 114) --> >
+								<span class="info" title="Part ID minimum text length. Zero to disable.">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Option 6</label>
+							</td>
+							<td>
+								<input type="text" name="option6" value=<!--VARIABLE getHtmlOption(fd, 115) --> >
+								<span class="info" title="Option 6">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Password 1</label>
+							</td>
+							<td>
+								<input type="password" name="password1" value=<!--VARIABLE getHtmlOption(fd, 116) --> >
+								<span class="info" title="Password 1">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Password 2</label>
+							</td>
+							<td>
+								<input type="password" name="password2" value=<!--VARIABLE getHtmlOption(fd, 117) --> >
+								<span class="info" title="Password 2">&nbsp;?&nbsp;</span>
+							</td>
+						</tr>
+					</table>
+
+					<div class="clearfloat"></div><!-- lz note: see HTML5 'float' layout attribute -->
+
+					<div style="float: right;">
+						<br>
+						<button type="submit" name="saveParams" value="3" >Save</button>
+						<button type="submit" name="getParams" value="3" >Load</button>
+					</div>
+				</fieldset>
+
+			</form>
+
+
+			<form id="RTCform" action="" method="post">
+				<fieldset>
+					<legend>
+						Real Time Clock				
+					</legend>
+				
+					<select id="dayOfWeek" name="dayOfWeek" title="Day of Week">
+						<option value="0">Sun</option>
+						<option value="1">Mon</option>
+						<option value="2">Tue</option>
+						<option value="3">Wed</option>
+						<option value="4">Thu</option>
+						<option value="5">Fri</option>
+						<option value="6">Sat</option>
+					</select>
+
+					<select id="dayOfMonth" name="dayOfMonth" title="Day of Month">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+						<option value="24">24</option>
+						<option value="25">25</option>
+						<option value="26">26</option>
+						<option value="27">27</option>
+						<option value="28">28</option>
+						<option value="29">29</option>
+						<option value="30">30</option>
+						<option value="31">31</option>
+					</select>								
+					
+					<select id="month" name="month" title="Month">
+						<option value="0">Jan</option>
+						<option value="1">Feb</option>
+						<option value="2">Mar</option>
+						<option value="3">Apr</option>
+						<option value="4">May</option>
+						<option value="5">Jun</option>
+						<option value="6">Jul</option>
+						<option value="7">Aug</option>
+						<option value="8">Sep</option>
+						<option value="9">Oct</option>
+						<option value="10">Nov</option>
+						<option value="11">Dec</option>
+					</select>
+
+					<select id= "year" name="year" title="Year">
+						<option value="2014">2014</option>
+						<option value="2015">2015</option>
+						<option value="2016">2016</option>
+						<option value="2017">2017</option>
+						<option value="2018">2018</option>
+						<option value="2019">2019</option>
+						<option value="2020">2020</option>
+						<option value="2021">2021</option>
+						<option value="2022">2022</option>
+						<option value="2023">2023</option>
+						<option value="2024">2024</option>
+						<option value="2025">2025</option>
+						<option value="2026">2026</option>
+						<option value="2027">2027</option>
+						<option value="2028">2028</option>
+						<option value="2029">2029</option>
+						<option value="2030">2030</option>
+						<option value="2031">2031</option>
+						<option value="2032">2032</option>
+						<option value="2033">2033</option>
+						<option value="2034">2034</option>
+						<option value="2035">2035</option>
+						<option value="2036">2036</option>
+						<option value="2037">2037</option>
+						<option value="2038">2038</option>
+						<option value="2039">2039</option>
+					</select>
+					
+					<input id="hh" class="hhmmss" type="text" name="hh" placeholder="00" pattern="\d\d">
+					<label class="hhmmss">hr</label>
+					<input id="mm" class="hhmmss" type="text" name="mm" placeholder="00" pattern="\d\d">
+					<label class="hhmmss">min</label>
+					<input id="ss" class="hhmmss" type="text" name="ss" placeholder="00" pattern="\d\d">
+					<label class="hhmmss">sec</label>
+					<button type="submit" name="setRTC" value="setRTC" title="Refresh page (F5) to update RTC fields" >Set</button>
+					<span class="version" name="AppVersion">&nbsp;<!--VARIABLE getHtmlOption(fd, 120) --> </span>
+				</fieldset>
+			</form>
+
+		</div>
+	</main>
+
+	<footer>
+		<span id="status"><!-- Ajax generated footer goes here. See status.html --></span>
+		<span style="float: right;">
+			<input type="button"  class="nav" value="Config..." onclick="window.location.href='config.html';" />
+			<input type="button"  disabled class="nav" value="Options..." onclick="window.location.href='options.html';" />
+			<input type="button"  class="nav" value="Calibration..." onclick="window.location.href='calibration.html';" />
+			<input type="button"  class="nav" value="Done" onclick="window.location.href='index.htm';" />
+			<span id="authentication" style="visibility: hidden;"><!--CPPCALL getHTMLAuthentication --> </span>
+		</span>
+	</footer>
+</body>
+</html>

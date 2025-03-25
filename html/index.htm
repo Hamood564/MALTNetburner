@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"> 
+	
+	<title>TQC Micro Leak Tester</title>	
+	<link rel="icon" type="image/x-icon" href="images/Malt.ico">
+	<link rel="stylesheet" type="text/css" href="microLeakTest.css">
+	<script src="ajaxScript.js"></script>
+	<meta name="version" content="Single_MALT_v1">
+	<meta name="lastmodified" content="2016-02-26">
+</head>
+
+<body>
+	<noscript>
+		<h1>MALT requires JavaScript to be enabled in your browser.</h1>
+	</noscript>
+
+	<header>
+		<img id="tqclogo" src="TQC_Auto_test.gif" alt="TQC Automation" >
+		<h1>Micro Apps Leak Tester (MALT)</h1>
+	</header>
+
+	<main>
+		<div id="moduleA" class="middle">
+			<div id="dataA"><!-- Ajax generated table goes here. See dataTableA.html --></div>
+
+			<form id="controlButtonsA" action="" method="post">
+	
+				<select id="selectedTest" style="width:140px;" name="applyTest" onchange="this.form.submit();" 
+						  title="Select leak test parameter configuration" >
+					<option value="0"><!--VARIABLE getHtmlConfigLabel(fd, 0) --></option>
+					<option value="1"><!--VARIABLE getHtmlConfigLabel(fd, 1) --></option>
+					<option value="2"><!--VARIABLE getHtmlConfigLabel(fd, 2) --></option>
+					<option value="3"><!--VARIABLE getHtmlConfigLabel(fd, 3) --></option>
+					<option value="4"><!--VARIABLE getHtmlConfigLabel(fd, 4) --></option>
+					<option value="5"><!--VARIABLE getHtmlConfigLabel(fd, 5) --></option>
+					<option value="6"><!--VARIABLE getHtmlConfigLabel(fd, 6) --></option>
+					<option value="7"><!--VARIABLE getHtmlConfigLabel(fd, 7) --></option>
+					<option value="8"><!--VARIABLE getHtmlConfigLabel(fd, 8) --></option>
+					<option value="9"><!--VARIABLE getHtmlConfigLabel(fd, 9) --></option>
+					<option value="10"><!--VARIABLE getHtmlConfigLabel(fd, 10) --></option>
+					<option value="11"><!--VARIABLE getHtmlConfigLabel(fd, 11) --></option>
+					<option value="12"><!--VARIABLE getHtmlConfigLabel(fd, 12) --></option>
+					<option value="13"><!--VARIABLE getHtmlConfigLabel(fd, 13) --></option>
+					<option value="14"><!--VARIABLE getHtmlConfigLabel(fd, 14) --></option>
+					<option value="15"><!--VARIABLE getHtmlConfigLabel(fd, 15) --></option>
+				</select>
+	
+				<button type="submit" name="startA" value="1" >Start</button>
+				<button type="submit" name="resetA" value="2" >Reset</button>
+
+			</form>
+
+			<div id="PassFailA">
+				<!-- Ajax generated results goes here. See passfailA.html -->
+			</div>			
+			
+			<div id="resultA">
+				<!-- Ajax generated table goes here. See resultTableA.html -->
+			</div>
+
+		</div>
+
+		<div class="clearfloat"></div><!-- lz note: see HTML5 'float' layout attribute -->
+
+	</main>
+
+	<footer>
+		<span id="status"><!-- Ajax generated footer goes here. See status.html --></span>
+		<span style="float: right;">
+			<button type="text" name="graphbtn" value="98" onclick="clearAllIntervals(); window.location.href = 'graph/graph.html';" >Graph...</button>
+			<button type="text" name="configbtn" value="99" onclick="clearAllIntervals(); window.location.href = 'password.html';" >Config...</button>
+			<span id="appliedConfig" style="visibility: hidden;"><!--CPPCALL getHTMLAppliedConfig --><span>
+			<span id="authentication" style="visibility: hidden;"><!--CPPCALL resetAuthentication --></span>
+		</span>
+   </footer>
+</body>
+</html>
